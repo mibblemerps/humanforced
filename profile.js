@@ -1,3 +1,5 @@
+import md5 from 'md5';
+
 export default class Profile {
     constructor() {
         /**
@@ -36,5 +38,9 @@ export default class Profile {
      */
     get fullName() {
         return this.firstName + (this.lastName ? ' '  + this.lastName : '');
+    }
+
+    get hash() {
+        return md5(JSON.stringify(this));
     }
 }

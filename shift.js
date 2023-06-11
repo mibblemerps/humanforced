@@ -1,3 +1,5 @@
+import md5 from 'md5';
+
 export default class Shift {
     constructor() {
         /**
@@ -54,5 +56,9 @@ export default class Shift {
          * @type {number}
          */
         this.status = undefined;
+    }
+
+    get hash() {
+        return md5(JSON.stringify(this));
     }
 }
