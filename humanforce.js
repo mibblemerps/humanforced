@@ -7,6 +7,15 @@ import Profile from './profile.js';
 const userAgent = 'Dalvik/2.1.0 (Linux; U; Android 12; Build/SE1A.220826.005)';
 
 /**
+ * @param {Date} date
+ * @return {Date}
+ */
+function toUtc(date) {
+    return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+        date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds()));
+}
+
+/**
  * Humanforce client instance.
  */
 export default class Humanforce {
@@ -121,6 +130,9 @@ export default class Humanforce {
         const today = new Date();
         from = from ?? new Date(today.getFullYear(), today.getMonth() - 2, 1);
         to = to ?? new Date(today.getFullYear(), today.getMonth() + 2 + 1, 0); // add extra month so date 0 will give the last day of the previous month
+
+        from = new Date(from.getTime() - from.getTimezoneOffset() * 60000);
+        to = new Date(to.getTime() - to.getTimezoneOffset() * 60000);
 
         const requestBody = JSON.stringify({
             DateFrom: from,
